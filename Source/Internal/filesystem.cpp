@@ -877,6 +877,10 @@ string DumpIntoFile(const void* buf, size_t nbyte) {
 string CaseCorrect(const string& v) {
     char new_path[kPathSize];
     strncpy(new_path, v.c_str(), kPathSize);
+    if(new_path[kPathSize - 1] != '\0') {
+        LOGW << "CaseCorrect truncated path! Input of size " << v.length() << " exceeds path buffer size of " << kPathSize << "!";
+        new_path[kPathSize - 1] = '\0';
+    }
     caseCorrect(new_path);
     return string(new_path);
 }
